@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "is.cir"                        %% "ciris"                          % cirisVersion,
   "com.ovoenergy"                 %% "ciris-aws-ssm"                  % "1.0.0",
   "org.scalatest"                 %% "scalatest"                      % "3.1.0" % Test,
-  "com.github.alexarchambault"    %% "scalacheck-shapeless_1.14"      % "1.2.3" % Test,
+  "com.github.alexarchambault"    %% "scalacheck-shapeless_1.14"      % "1.2.5" % Test,
   "org.scalacheck"                %% "scalacheck"                     % "1.14.2" % Test
 )
 
