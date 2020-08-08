@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   "io.circe"                      %% "circe-parser"                   % circeVersion,
   "io.circe"                      %% "circe-generic"                  % circeVersion,
   "com.typesafe.akka"             %% "akka-slf4j"                     % "2.5.26",
-  "org.typelevel"                 %% "cats-core"                      % "2.1.0",
+  "org.typelevel"                 %% "cats-core"                      % "2.1.1",
   "com.gu.play-googleauth"        %% "play-v27"                       % "1.0.6",
   "io.searchbox"                  % "jest"                            % "6.3.1",
   "vc.inreach.aws"                % "aws-signing-request-interceptor" % "0.0.22",
