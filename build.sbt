@@ -30,7 +30,7 @@ libraryDependencies ++= Seq(
   "com.sksamuel.elastic4s"        %% "elastic4s-client-esjava"        % elastic4sVersion,
   "com.sksamuel.elastic4s"        %% "elastic4s-effect-cats"          % elastic4sVersion,
   "com.sksamuel.elastic4s"        %% "elastic4s-json-circe"           % elastic4sVersion,
-  "org.typelevel"                 %% "cats-tagless-macros"            % "0.12"
+  "org.typelevel"                 %% "cats-tagless-macros"            % "0.14.0"
 )
 
 enablePlugins(PlayScala, DockerPlugin)
