@@ -24,7 +24,7 @@ class DatadogSpec extends AnyFlatSpec with Matchers with OptionValues {
       note = Some("this build was awesome")
     )
     val payload = Datadog.buildPayload(deployment)
-    val json    = parse(Json.stringify(payload)).right.get
+    val json    = parse(Json.stringify(payload)).toOption.get
 
     val expectedJson = parse(
       """
@@ -40,7 +40,7 @@ class DatadogSpec extends AnyFlatSpec with Matchers with OptionValues {
         |  ]
         |}
       """.stripMargin
-    ).right.get
+    ).toOption.get
 
     assert(json == expectedJson)
   }

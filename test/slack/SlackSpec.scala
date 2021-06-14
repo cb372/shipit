@@ -24,7 +24,7 @@ class SlackSpec extends AnyFlatSpec with Matchers with OptionValues {
       note = Some("this build was awesome")
     )
     val payload = Slack.buildPayload(deployment, channel = None)
-    val json    = parse(Json.stringify(payload)).right.get
+    val json    = parse(Json.stringify(payload)).toOption.get
 
     val expectedJson = parse(
       """
@@ -55,7 +55,7 @@ class SlackSpec extends AnyFlatSpec with Matchers with OptionValues {
         | ]
         |}
       """.stripMargin
-    ).right.get
+    ).toOption.get
 
     assert(json == expectedJson)
   }
@@ -74,7 +74,7 @@ class SlackSpec extends AnyFlatSpec with Matchers with OptionValues {
       note = None
     )
     val payload = Slack.buildPayload(deployment, channel = Some("my-channel"))
-    val json    = parse(Json.stringify(payload)).right.get
+    val json    = parse(Json.stringify(payload)).toOption.get
 
     val expectedJson = parse(
       """
@@ -101,7 +101,7 @@ class SlackSpec extends AnyFlatSpec with Matchers with OptionValues {
         | ]
         |}
       """.stripMargin
-    ).right.get
+    ).toOption.get
 
     assert(json == expectedJson)
   }

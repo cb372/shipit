@@ -17,9 +17,8 @@ import com.sksamuel.elastic4s.requests.admin.UpdateIndexLevelSettingsRequest
 import com.sksamuel.elastic4s.requests.indexes.CreateIndexRequest
 import com.sksamuel.elastic4s.requests.searches.SearchRequest
 import com.sksamuel.elastic4s.requests.searches.queries.Query
-import com.sksamuel.elastic4s.requests.searches.queries.matches.MatchQuery
 import com.sksamuel.elastic4s.{ElasticClient, Executor}
-import deployments.Environment.{Nonprod, Prod}
+import deployments.Environment.{LoadTest, Nonprod, Prod}
 import elasticsearch.Agg.{bucket, max}
 import elasticsearch.CirceCodecs._
 import elasticsearch.Instances._
@@ -51,9 +50,10 @@ object Deployments {
     */
   private def environmentFilter(environment: Option[Environment]): Option[Query] =
     environment match {
-      case Some(Nonprod) => Some(matchQuery("environment", Nonprod.name))
-      case Some(Prod)    => Some(not(matchQuery("environment", Nonprod.name)))
-      case None          => None
+      case Some(LoadTest) => Some(matchQuery("environment", LoadTest.name))
+      case Some(Nonprod)  => Some(matchQuery("environment", Nonprod.name))
+      case Some(Prod)     => Some(not(matchQuery("environment", Nonprod.name)))
+      case None           => None
     }
 
   private def searchFilters(terms: SearchTerms): Option[NonEmptyList[Query]] =

@@ -45,35 +45,37 @@ class DeploymentsController(
 
   def create: Action[AnyContent] =
     apiKeyAuth.ApiKeyAuthAction.async { implicit request =>
-      DeploymentForm.bindFromRequest.fold(
-        _ =>
-          Future.successful(
-            BadRequest(
-              """You must include at least the following form fields in your POST: 'team', 'service', 'buildId'.
+      DeploymentForm
+        .bindFromRequest()
+        .fold(
+          _ =>
+            Future.successful(
+              BadRequest(
+                """You must include at least the following form fields in your POST: 'team', 'service', 'buildId'.
                 |You may also include the following fields:
                 |- one or more links (e.g. links[0].title=PR, links[0].url=http://github.com/my-pr) (link title and URL must both be non-empty strings)
                 |- a 'note' field containing any notes about the deployment (can be an empty string)
                 |- a 'notifySlackChannel' field containing an additional Slack channel that you want to notify (#announce_change will always be notified of prod deploys)
                 |- an 'environment' field set to either 'nonprod' / 'uat' or 'prod' / 'prd'. #announce_change will not be notified of nonprod deployments.
                 |""".stripMargin
-            )
-          ),
-        data => {
-          Deployments
-            .createDeployment(
-              data.team,
-              data.service,
-              data.buildId,
-              OffsetDateTime.now(),
-              data.environment.getOrElse(Prod),
-              data.links.getOrElse(Nil),
-              data.note,
-              data.notifySlackChannel
-            )
-            .run(ctx)
-            .map(_ => Ok("ok"))
-        }
-      )
+              )
+            ),
+          data => {
+            Deployments
+              .createDeployment(
+                data.team,
+                data.service,
+                data.buildId,
+                OffsetDateTime.now(),
+                data.environment.getOrElse(Prod),
+                data.links.getOrElse(Nil),
+                data.note,
+                data.notifySlackChannel
+              )
+              .run(ctx)
+              .map(_ => Ok("ok"))
+          }
+        )
     }
 
   def delete(id: String): Action[AnyContent] =
@@ -111,7 +113,7 @@ object DeploymentsController {
         }
       )
       .transform(
-        Environment.fromString(_).right.get,
+        Environment.fromString(_).toOption.get,
         _.name
       )
 

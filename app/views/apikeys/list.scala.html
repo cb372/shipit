@@ -30,7 +30,7 @@
 
     <h5>Create API key</h5>
     <div class="row no-gutters mb-4">
-      <form method="post" action="@routes.ApiKeysController.create">
+      <form method="post" action="@routes.ApiKeysController.create()">
         <div class="form-row mt-1 mb-1">
           @CSRF.formField
           <div class="col">

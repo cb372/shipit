@@ -67,7 +67,7 @@ class AppComponents(context: Context, config: Config)
     (user: UserIdentity) => config.admin.adminEmailAddresses.contains(user.email)
 
   private def toFuture[A](io: IO[A]): Future[A] =
-    io.unsafeToFuture
+    io.unsafeToFuture()
 
   val toFutureK: IO ~> Future =
     FunctionK.lift(toFuture)

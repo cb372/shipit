@@ -34,7 +34,7 @@ class ApiKeysController(
     authAction.async { implicit request =>
       implicit val user: UserIdentity = request.user
       EitherT
-        .fromEither[Future](CreateKeyForm.bindFromRequest.fold(Left(_), Right(_)))
+        .fromEither[Future](CreateKeyForm.bindFromRequest().fold(Left(_), Right(_)))
         .leftMap(_ => Redirect(routes.ApiKeysController.list()).flashing("error" -> "Invalid request"))
         .semiflatMap(data => apiKeys.create(NewApiKey(UUID.randomUUID.toString, data.description, user.email)))
         .map(k => Redirect(routes.ApiKeysController.list()).flashing("info" -> s"Created API key: ${k.value.key}"))
